@@ -1,4 +1,7 @@
+import 'package:assignment3/addedcontact.dart';
+import 'package:assignment3/btnwidget.dart';
 import 'package:assignment3/user_information.dart';
+import 'package:assignment3/userinputdetails_widget.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -41,109 +44,25 @@ class _MyAppState extends State<MyApp> {
       title: "Contacts Screen",
       home: Scaffold(backgroundColor: Color(0xff9E9E9E),
           appBar: AppBar(title: Text("Contacts Screen"),centerTitle: true,),
-      body:  Column(crossAxisAlignment: CrossAxisAlignment.stretch,
+      body:  SingleChildScrollView(child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-        Container( margin: EdgeInsets.only(top: 19,bottom: 7,right: 9,left: 9), padding: EdgeInsets.symmetric(vertical: 6,horizontal: 12),
-          decoration: BoxDecoration(color: Colors.white,
-          borderRadius:  BorderRadius.all(Radius.circular(27),) ,),
-        child: Row(
-          children: [
-            SizedBox(width: 170,child: TextField(focusNode:focusNode ,controller: nameController,decoration: InputDecoration(hintText: hintText1,hintStyle:
-            TextStyle(color: Colors.black, fontSize: 17,fontWeight: FontWeight.w600),border: InputBorder.none),)
-            ),
-          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [Icon(Icons.edit,color: Color(0xff3594DF)),]))
-
-        ],),),
-          Container( margin: EdgeInsets.symmetric(vertical: 18,horizontal: 9), padding: EdgeInsets.symmetric(vertical: 6,horizontal: 12),
-            decoration: BoxDecoration(color: Colors.white,
-              borderRadius:  BorderRadius.all(Radius.circular(27),) ,),
-            child: Row(
-              children: [
-                SizedBox( width:180,
-                  child: TextField(
-                    focusNode: focusNode2,
-                    controller: phoneController,
-                      style: TextStyle(color: Colors.black,fontSize: 17),
-                      decoration: InputDecoration(hintText: hintText2,hintStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.w600),
-                        labelStyle: TextStyle(color: Color(0xFFAAB9DA)),
-                        border: InputBorder.none,
-
-                      )
-                  ),
-                ),
-
-                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [Icon(Icons.call,color: Color(0xff3594DF)),]))
-
-              ],),),
+          UserInputDetailsWidget(hintText1: hintText1, focusNode: focusNode, nameController: nameController),
+          UserInputDetailsWidget(hintText1: hintText2, focusNode: focusNode2, nameController: phoneController),
           Container(
             margin: EdgeInsets.only(top: 2,bottom: 6,left: 9,right: 12),
             child: Row(mainAxisAlignment:MainAxisAlignment.spaceEvenly,children: [
-            Expanded(
-              flex: 1,
-              child: Container(margin: EdgeInsets.all(5),child: ElevatedButton(onPressed: () {
-                onAddClickListener();
-              },child: Text("Add",style: TextStyle(fontWeight: FontWeight.w500),),
-                style: ElevatedButton.styleFrom( // ElevatedButton styles
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10), // Some padding example
-                  shape: RoundedRectangleBorder( // Border
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                  textStyle: TextStyle( // Text styles
-                    color: Colors.black,
-                    fontSize: 18,
-                    overflow: TextOverflow.ellipsis,
-                  ),)
+              CustomBtn(btnBackgrounColor:Colors.blueAccent , BtnText: "Add", OnBtnClickListener: OnAddClickListener , btnTextColor: Colors.white),
+              CustomBtn(btnBackgrounColor: Colors.red, BtnText: "Delete", OnBtnClickListener: OnDeleteClickListener,btnTextColor: Colors.black,)
+            ],),),
+          AddedContact(isVisible: isVisible1, name: name1, phoneNum: phoneNum1),
+          AddedContact(isVisible: isVisible2, name: name2, phoneNum: phoneNum2),
+          AddedContact(isVisible: isVisible3, name: name3, phoneNum: phoneNum3),
 
-          ),),
-            ),
-              Expanded(flex: 1,
-                child: Container(margin: EdgeInsets.all(5),child: ElevatedButton(onPressed: () {
-                  onDeleteClickListener();
-                },child: Text("Delete",style: TextStyle(color: Colors.black,fontWeight:FontWeight.w500 ),),
-    style: ElevatedButton.styleFrom( // ElevatedButton styles
-                      primary: Colors.red,
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, 10), // Some padding example
-                      shape: RoundedRectangleBorder( // Border
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.red),
-                      ),
-                  textStyle: TextStyle( // Text styles
-                      color: Colors.black,
-                      fontSize: 18,
-                      overflow: TextOverflow.ellipsis,
-                  ),)
-
-                ),),
-              ),
-
-            ],),),
-          Visibility(visible:isVisible1,
-            child: Container( margin: EdgeInsets.symmetric(vertical: 15, horizontal: 9),padding: EdgeInsets.all(20),decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all( Radius.circular(30))),child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,children: [
-              Text("name: $name1",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
-              Text("Phone $phoneNum1",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500)),
-            ],),),
-          ),
-          Visibility(visible:isVisible2,
-            child: Container( margin: EdgeInsets.symmetric(vertical: 4, horizontal: 9),padding: EdgeInsets.all(20),decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all( Radius.circular(30))),child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,children: [
-              Text("name: $name2",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
-              Text("Phone : $phoneNum2",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500)),
-            ],),),
-          ),
-          Visibility(visible:isVisible3,
-            child: Container( margin: EdgeInsets.symmetric(vertical: 16, horizontal: 9),padding: EdgeInsets.all(20),decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all( Radius.circular(30))),child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,children: [
-              Text("name: $name3",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
-              Text("Phone : $phoneNum3",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500)),
-            ],),),
-          )
-      ],)),
+        ],),)),
     );
   }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     focusNode.addListener(() {
       if(focusNode.hasFocus){
@@ -151,7 +70,6 @@ class _MyAppState extends State<MyApp> {
       }else{
         hintText1="Enter your name here";
       }
-
       setState(() {
 
       });
@@ -168,7 +86,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void onAddClickListener(){
+  void OnAddClickListener(){
     setState(() {
 
       if(UsersList.isEmpty && nameController.text !="" && phoneController.text !=""){
@@ -195,7 +113,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  void onDeleteClickListener(){
+  void OnDeleteClickListener(){
     setState(() {
       if(UsersList.length==1){
         name1='';
@@ -219,5 +137,7 @@ class _MyAppState extends State<MyApp> {
 
     });
   }
+
+
 }
 
